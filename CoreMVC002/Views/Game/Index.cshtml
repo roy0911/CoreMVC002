@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "1A2B 數字猜謎遊戲";
+    var history = ViewBag.History as List<string> ?? new List<string>();
+    int count = ViewBag.Count ?? 0;
+}
+
+<div class="text-center">
+    <h2 class="display-4">1A2B 數字猜謎遊戲</h2>
+    <hr />
+
+    <h5 class="text-secondary">目前猜測次數：<strong>@count</strong> 次</h5>
+
+    <form asp-action="Guess" method="post" class="mb-3 mt-3">
+        <div class="form-group">
+            <label for="userGuess">請輸入 4 位不重複數字：</label>
+            <input type="text" id="userGuess" name="userGuess" class="form-control w-25 mx-auto text-center" maxlength="4" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">猜！</button>
+        <a asp-action="Reset" class="btn btn-secondary mt-2">重新開始</a>
+    </form>
+
+    @if (history.Count > 0)
+    {
+        <div class="form-group mt-4">
+            <label for="historySelect"><strong>歷史猜測紀錄（下拉式選單）：</strong></label>
+            <select id="historySelect" class="form-control w-50 mx-auto">
+                @foreach (var item in history)
+                {
+                    <option>@item</option>
+                }
+            </select>
+        </div>
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success w-50 mx-auto mt-3">
+            <strong>@ViewBag.Message</strong>
+        </div>
+    }
+</div>
